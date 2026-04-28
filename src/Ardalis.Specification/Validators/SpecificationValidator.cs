@@ -23,11 +23,6 @@ public class SpecificationValidator : ISpecificationValidator
 
     public virtual bool IsValid<T>(T entity, ISpecification<T> specification)
     {
-        foreach (var partialValidator in Validators)
-        {
-            if (partialValidator.IsValid(entity, specification) == false) return false;
-        }
-
-        return true;
+        return Validators.All(partialValidator => partialValidator.IsValid(entity, specification));
     }
 }

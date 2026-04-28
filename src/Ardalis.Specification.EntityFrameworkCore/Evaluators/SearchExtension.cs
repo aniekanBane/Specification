@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
 
 namespace Ardalis.Specification.EntityFrameworkCore;
@@ -8,8 +7,13 @@ public static class SearchExtension
 {
     // We'll name the property Format just so we match the produced SQL query parameter name (in case of interpolated strings).
     private record StringVar(string Format);
-    private static readonly PropertyInfo _stringFormatProperty = typeof(StringVar).GetProperty(nameof(StringVar.Format))!;
-    private static readonly MemberExpression _functions = Expression.Property(null, typeof(EF).GetProperty(nameof(EF.Functions))!);
+
+    private static readonly PropertyInfo _stringFormatProperty =
+        typeof(StringVar).GetProperty(nameof(StringVar.Format))!;
+
+    private static readonly MemberExpression _functions =
+        Expression.Property(null, typeof(EF).GetProperty(nameof(EF.Functions))!);
+
     private static readonly MethodInfo _likeMethodInfo = typeof(DbFunctionsExtensions)
         .GetMethod(nameof(DbFunctionsExtensions.Like), [typeof(DbFunctions), typeof(string), typeof(string)])!;
 
@@ -40,7 +44,8 @@ public static class SearchExtension
 #if NET9_0_OR_GREATER
     [System.Runtime.CompilerServices.OverloadResolutionPriority(1)]
 #endif
-    public static IQueryable<T> ApplyLikesAsOrGroup<T>(this IQueryable<T> source, ReadOnlySpan<SearchExpressionInfo<T>> searchExpressions)
+    public static IQueryable<T> ApplyLikesAsOrGroup<T>(this IQueryable<T> source,
+        ReadOnlySpan<SearchExpressionInfo<T>> searchExpressions)
     {
         Debug.Assert(_likeMethodInfo is not null);
 
@@ -58,7 +63,8 @@ public static class SearchExtension
             : source.Where(Expression.Lambda<Func<T, bool>>(combinedExpr, mainParam));
     }
 
-    public static IQueryable<T> ApplyLikesAsOrGroup<T>(this IQueryable<T> source, IEnumerable<SearchExpressionInfo<T>> searchExpressions)
+    public static IQueryable<T> ApplyLikesAsOrGroup<T>(this IQueryable<T> source,
+        IEnumerable<SearchExpressionInfo<T>> searchExpressions)
     {
         Debug.Assert(_likeMethodInfo is not null);
 

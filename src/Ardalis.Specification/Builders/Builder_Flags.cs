@@ -15,7 +15,7 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> IgnoreQueryFilters<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
     {
-        IgnoreQueryFilters((ISpecificationBuilder<T>)builder, true);
+        IgnoreQueryFilters<T>(builder, true);
         return builder;
     }
 
@@ -31,7 +31,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        IgnoreQueryFilters((ISpecificationBuilder<T>)builder, condition);
+        IgnoreQueryFilters<T>(builder, condition);
         return builder;
     }
 
@@ -74,7 +74,7 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> IgnoreAutoIncludes<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
     {
-        IgnoreAutoIncludes((ISpecificationBuilder<T>)builder, true);
+        IgnoreAutoIncludes<T>(builder, true);
         return builder;
     }
 
@@ -90,7 +90,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        IgnoreAutoIncludes((ISpecificationBuilder<T>)builder, condition);
+        IgnoreAutoIncludes<T>(builder, condition);
         return builder;
     }
 
@@ -133,7 +133,7 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> AsSplitQuery<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
     {
-        AsSplitQuery((ISpecificationBuilder<T>)builder, true);
+        AsSplitQuery<T>(builder, true);
         return builder;
     }
 
@@ -149,7 +149,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        AsSplitQuery((ISpecificationBuilder<T>)builder, condition);
+        AsSplitQuery<T>(builder, condition);
         return builder;
     }
 
@@ -193,7 +193,7 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> AsNoTracking<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
     {
-        AsNoTracking((ISpecificationBuilder<T>)builder, true);
+        AsNoTracking<T>(builder, true);
         return builder;
     }
 
@@ -210,7 +210,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        AsNoTracking((ISpecificationBuilder<T>)builder, condition);
+        AsNoTracking<T>(builder, condition);
         return builder;
     }
 
@@ -258,7 +258,7 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> AsNoTrackingWithIdentityResolution<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
     {
-        AsNoTrackingWithIdentityResolution((ISpecificationBuilder<T>)builder, true);
+        AsNoTrackingWithIdentityResolution<T>(builder, true);
         return builder;
     }
 
@@ -275,7 +275,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        AsNoTrackingWithIdentityResolution((ISpecificationBuilder<T>)builder, condition);
+        AsNoTrackingWithIdentityResolution<T>(builder, condition);
         return builder;
     }
 
@@ -323,7 +323,7 @@ public static partial class SpecificationBuilderExtensions
     public static ISpecificationBuilder<T, TResult> AsTracking<T, TResult>(
         this ISpecificationBuilder<T, TResult> builder) where T : class
     {
-        AsTracking((ISpecificationBuilder<T>)builder, true);
+        AsTracking<T>(builder, true);
         return builder;
     }
 
@@ -340,7 +340,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         bool condition) where T : class
     {
-        AsTracking((ISpecificationBuilder<T>)builder, condition);
+        AsTracking<T>(builder, condition);
         return builder;
     }
 

@@ -5,7 +5,9 @@ namespace Ardalis.Specification;
 /// <inheritdoc cref="ISpecification{T, TResult}"/>
 public class Specification<T, TResult> : Specification<T>, ISpecification<T, TResult>
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets the query builder for the specification.
+    /// </summary>
     public new ISpecificationBuilder<T, TResult> Query => new SpecificationBuilder<T, TResult>(this);
 
     /// <inheritdoc/>
@@ -32,21 +34,22 @@ public class Specification<T> : ISpecification<T>
     // The initial value is not important since the value is always initialized by the root of the chain.
     // Therefore, we don't need ThreadLocal (it's more expensive).
     // With this we're saving 8 bytes per include builder, and we don't need an order builder at all (saving 32 bytes per order builder instance).
-    [ThreadStatic]
-    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ThreadStatic] [EditorBrowsable(EditorBrowsableState.Never)]
     public static bool IsChainDiscarded;
 
     // The state is null initially, but we're spending 8 bytes per reference (on x64).
     // This will be reconsidered for version 10 where we may store the whole state as a single array of structs.
-    private OneOrMany<WhereExpressionInfo<T>> _whereExpressions = new();
-    private OneOrMany<SearchExpressionInfo<T>> _searchExpressions = new();
-    private OneOrMany<OrderExpressionInfo<T>> _orderExpressions = new();
-    private OneOrMany<IncludeExpressionInfo> _includeExpressions = new();
-    private OneOrMany<string> _includeStrings = new();
-    private OneOrMany<string> _queryTags = new();
+    private OneOrMany<WhereExpressionInfo<T>> _whereExpressions;
+    private OneOrMany<SearchExpressionInfo<T>> _searchExpressions;
+    private OneOrMany<OrderExpressionInfo<T>> _orderExpressions;
+    private OneOrMany<IncludeExpressionInfo> _includeExpressions;
+    private OneOrMany<string> _includeStrings;
+    private OneOrMany<string> _queryTags;
     private Dictionary<string, object>? _items;
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Gets the query builder for the specification.
+    /// </summary>
     public ISpecificationBuilder<T> Query => new SpecificationBuilder<T>(this);
 
     /// <summary>
@@ -94,22 +97,22 @@ public class Specification<T> : ISpecification<T>
     // Based on the alignment of 8 bytes (on x64) we can store 8 flags here. So, we have space for 2 more flags for free.
 
     /// <inheritdoc/>
-    public bool IgnoreQueryFilters { get; internal set; } = false;
+    public bool IgnoreQueryFilters { get; internal set; }
 
     /// <inheritdoc/>
-    public bool IgnoreAutoIncludes { get; internal set; } = false;
+    public bool IgnoreAutoIncludes { get; internal set; }
 
     /// <inheritdoc/>
-    public bool AsSplitQuery { get; internal set; } = false;
+    public bool AsSplitQuery { get; internal set; }
 
     /// <inheritdoc/>
-    public bool AsNoTracking { get; internal set; } = false;
+    public bool AsNoTracking { get; internal set; }
 
     /// <inheritdoc/>
-    public bool AsTracking { get; internal set; } = false;
+    public bool AsTracking { get; internal set; }
 
     /// <inheritdoc/>
-    public bool AsNoTrackingWithIdentityResolution { get; internal set; } = false;
+    public bool AsNoTrackingWithIdentityResolution { get; internal set; }
 
     /// <inheritdoc/>
     public Dictionary<string, object> Items => _items ??= [];
@@ -140,7 +143,10 @@ public class Specification<T> : ISpecification<T>
     internal OneOrMany<string> OneOrManyQueryTags => _queryTags;
 
     internal void Add(WhereExpressionInfo<T> whereExpression) => _whereExpressions.Add(whereExpression);
-    internal void Add(SearchExpressionInfo<T> searchExpression) => _searchExpressions.AddSorted(searchExpression, SearchExpressionComparer<T>.Default);
+
+    internal void Add(SearchExpressionInfo<T> searchExpression) =>
+        _searchExpressions.AddSorted(searchExpression, SearchExpressionComparer<T>.Default);
+
     internal void Add(OrderExpressionInfo<T> orderExpression) => _orderExpressions.Add(orderExpression);
     internal void Add(IncludeExpressionInfo includeExpression) => _includeExpressions.Add(includeExpression);
     internal void Add(string includeString) => _includeStrings.Add(includeString);

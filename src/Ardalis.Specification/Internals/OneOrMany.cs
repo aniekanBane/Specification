@@ -10,21 +10,17 @@ internal struct OneOrMany<T> where T : class
 
     public void Add(T item)
     {
-        if (_value is null)
+        switch (_value)
         {
-            _value = item;
-            return;
-        }
-
-        if (_value is List<T> list)
-        {
-            list.Add(item);
-            return;
-        }
-
-        if (_value is T singleValue)
-        {
-            _value = new List<T>(2) { singleValue, item };
+            case null:
+                _value = item;
+                return;
+            case List<T> list:
+                list.Add(item);
+                return;
+            case T singleValue:
+                _value = new List<T>(2) { singleValue, item };
+                break;
         }
     }
 
@@ -41,30 +37,28 @@ internal struct OneOrMany<T> where T : class
             throw new ArgumentNullException(nameof(comparer), "Comparer cannot be null.");
         }
 
-        if (_value is List<T> list)
+        switch (_value)
         {
-            var index = list.FindIndex(x => comparer.Compare(item, x) < 0);
-            if (index == -1)
-            {
-                list.Add(item);
-            }
-            else
-            {
-                list.Insert(index, item);
-            }
-            return;
-        }
+            case List<T> list:
+                {
+                    var index = list.FindIndex(x => comparer.Compare(item, x) < 0);
+                    if (index == -1)
+                    {
+                        list.Add(item);
+                    }
+                    else
+                    {
+                        list.Insert(index, item);
+                    }
 
-        if (_value is T singleValue)
-        {
-            if (comparer.Compare(item, singleValue) < 0)
-            {
+                    return;
+                }
+            case T singleValue when comparer.Compare(item, singleValue) < 0:
                 _value = new List<T>(DEFAULT_CAPACITY) { item, singleValue };
-            }
-            else
-            {
+                break;
+            case T singleValue:
                 _value = new List<T>(DEFAULT_CAPACITY) { singleValue, item };
-            }
+                break;
         }
     }
 
@@ -123,22 +117,13 @@ internal struct OneOrMany<T> where T : class
     {
         get
         {
-            if (_value is null)
+            return _value switch
             {
-                return Enumerable.Empty<T>();
-            }
-
-            if (_value is List<T> list)
-            {
-                return list;
-            }
-
-            if (_value is T singleValue)
-            {
-                return new[] { singleValue };
-            }
-
-            throw new InvalidOperationException("The value is neither a single item nor a list of items.");
+                null => Enumerable.Empty<T>(),
+                List<T> list => list,
+                T singleValue => new[] { singleValue },
+                _ => throw new InvalidOperationException("The value is neither a single item nor a list of items.")
+            };
         }
     }
 
@@ -146,14 +131,12 @@ internal struct OneOrMany<T> where T : class
     {
         var clone = new OneOrMany<T>();
 
-        if (_value is T singleValue)
+        clone._value = _value switch
         {
-            clone._value = singleValue;
-        }
-        else if (_value is List<T> list)
-        {
-            clone._value = list.ToList();
-        }
+            T singleValue => singleValue,
+            List<T> list => list.ToList(),
+            _ => clone._value
+        };
 
         return clone;
     }

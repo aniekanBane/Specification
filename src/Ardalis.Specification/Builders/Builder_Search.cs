@@ -20,7 +20,7 @@ public static partial class SpecificationBuilderExtensions
         string pattern,
         int group = 1) where T : class
     {
-        Search((ISpecificationBuilder<T>)builder, keySelector, pattern, true, group);
+        Search<T>(builder, keySelector, pattern, true, group);
         return builder;
     }
 
@@ -42,7 +42,7 @@ public static partial class SpecificationBuilderExtensions
         bool condition,
         int group = 1) where T : class
     {
-        Search((ISpecificationBuilder<T>)builder, keySelector, pattern, condition, group);
+        Search<T>(builder, keySelector, pattern, condition, group);
         return builder;
     }
 

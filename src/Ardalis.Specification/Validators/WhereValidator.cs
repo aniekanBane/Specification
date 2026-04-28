@@ -7,25 +7,18 @@ public class WhereValidator : IValidator
 
     public bool IsValid<T>(T entity, ISpecification<T> specification)
     {
-        if (specification is Specification<T> spec)
+        if (specification is not Specification<T> spec)
         {
-            if (spec.OneOrManyWhereExpressions.IsEmpty) return true;
-            if (spec.OneOrManyWhereExpressions.SingleOrDefault is { } whereExpression)
-            {
-                return whereExpression.FilterFunc(entity);
-            }
-
-            foreach (var whereExpr in spec.OneOrManyWhereExpressions.List)
-            {
-                if (whereExpr.FilterFunc(entity) == false) return false;
-            }
-            return true;
+            return specification.WhereExpressions.All(whereExpr => whereExpr.FilterFunc(entity));
         }
 
-        foreach (var whereExpr in specification.WhereExpressions)
+        if (spec.OneOrManyWhereExpressions.IsEmpty) return true;
+
+        if (spec.OneOrManyWhereExpressions.SingleOrDefault is { } whereExpression)
         {
-            if (whereExpr.FilterFunc(entity) == false) return false;
+            return whereExpression.FilterFunc(entity);
         }
-        return true;
+
+        return spec.OneOrManyWhereExpressions.List.All(whereExpr => whereExpr.FilterFunc(entity));
     }
 }

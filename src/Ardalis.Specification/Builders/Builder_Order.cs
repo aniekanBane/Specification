@@ -14,7 +14,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         Expression<Func<T, object?>> keySelector)
     {
-        OrderBy((ISpecificationBuilder<T>)builder, keySelector, true);
+        OrderBy<T>(builder, keySelector, true);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -32,7 +32,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, object?>> keySelector,
         bool condition)
     {
-        OrderBy((ISpecificationBuilder<T>)builder, keySelector, condition);
+        OrderBy<T>(builder, keySelector, condition);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -83,7 +83,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         Expression<Func<T, object?>> keySelector)
     {
-        OrderByDescending((ISpecificationBuilder<T>)builder, keySelector, true);
+        OrderByDescending<T>(builder, keySelector, true);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -101,7 +101,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, object?>> keySelector,
         bool condition)
     {
-        OrderByDescending((ISpecificationBuilder<T>)builder, keySelector, condition);
+        OrderByDescending<T>(builder, keySelector, condition);
         return (SpecificationBuilder<T, TResult>)builder;
     }
 
@@ -152,7 +152,7 @@ public static partial class SpecificationBuilderExtensions
         this IOrderedSpecificationBuilder<T, TResult> builder,
         Expression<Func<T, object?>> keySelector)
     {
-        ThenBy((IOrderedSpecificationBuilder<T>)builder, keySelector, true);
+        ThenBy<T>(builder, keySelector, true);
         return builder;
     }
 
@@ -170,7 +170,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, object?>> keySelector,
         bool condition)
     {
-        ThenBy((IOrderedSpecificationBuilder<T>)builder, keySelector, condition);
+        ThenBy<T>(builder, keySelector, condition);
         return builder;
     }
 
@@ -224,7 +224,7 @@ public static partial class SpecificationBuilderExtensions
         this IOrderedSpecificationBuilder<T, TResult> builder,
         Expression<Func<T, object?>> keySelector)
     {
-        ThenByDescending((IOrderedSpecificationBuilder<T>)builder, keySelector, true);
+        ThenByDescending<T>(builder, keySelector, true);
         return builder;
     }
 
@@ -242,7 +242,7 @@ public static partial class SpecificationBuilderExtensions
         Expression<Func<T, object?>> keySelector,
         bool condition)
     {
-        ThenByDescending((IOrderedSpecificationBuilder<T>)builder, keySelector, condition);
+        ThenByDescending<T>(builder, keySelector, condition);
         return builder;
     }
 

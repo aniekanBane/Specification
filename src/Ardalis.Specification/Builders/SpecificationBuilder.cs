@@ -6,18 +6,14 @@
 /// <typeparam name="T">The type of the entity.</typeparam>
 /// <typeparam name="TResult">The type of the result.</typeparam>
 public interface ICacheSpecificationBuilder<T, TResult>
-    : ISpecificationBuilder<T, TResult>, ICacheSpecificationBuilder<T>
-{
-}
+    : ISpecificationBuilder<T, TResult>, ICacheSpecificationBuilder<T>;
 
 /// <summary>
 /// Represents a specification builder that supports caching operations.
 /// </summary>
 /// <typeparam name="T">The type of the entity.</typeparam>
 public interface ICacheSpecificationBuilder<T>
-    : ISpecificationBuilder<T>
-{
-}
+    : ISpecificationBuilder<T>;
 
 /// <summary>
 /// Represents a specification builder that supports order operations.
@@ -25,18 +21,14 @@ public interface ICacheSpecificationBuilder<T>
 /// <typeparam name="T">The type of the entity.</typeparam>
 /// <typeparam name="TResult">The type of the result.</typeparam>
 public interface IOrderedSpecificationBuilder<T, TResult>
-    : ISpecificationBuilder<T, TResult>, IOrderedSpecificationBuilder<T>
-{
-}
+    : ISpecificationBuilder<T, TResult>, IOrderedSpecificationBuilder<T>;
 
 /// <summary>
 /// Represents a specification builder that supports order operations.
 /// </summary>
 /// <typeparam name="T">The type of the entity.</typeparam>
 public interface IOrderedSpecificationBuilder<T>
-    : ISpecificationBuilder<T>
-{
-}
+    : ISpecificationBuilder<T>;
 
 /// <summary>
 /// Represents a specification builder.

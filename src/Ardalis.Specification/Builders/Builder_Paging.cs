@@ -15,7 +15,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         int take)
     {
-        Take((ISpecificationBuilder<T>)builder, take, true);
+        Take<T>(builder, take, true);
         return builder;
     }
 
@@ -34,7 +34,7 @@ public static partial class SpecificationBuilderExtensions
         int take,
         bool condition)
     {
-        Take((ISpecificationBuilder<T>)builder, take, condition);
+        Take<T>(builder, take, condition);
         return builder;
     }
 
@@ -87,7 +87,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         int skip)
     {
-        Skip((ISpecificationBuilder<T>)builder, skip, true);
+        Skip<T>(builder, skip, true);
         return builder;
     }
 
@@ -106,7 +106,7 @@ public static partial class SpecificationBuilderExtensions
         int skip,
         bool condition)
     {
-        Skip((ISpecificationBuilder<T>)builder, skip, condition);
+        Skip<T>(builder, skip, condition);
         return builder;
     }
 

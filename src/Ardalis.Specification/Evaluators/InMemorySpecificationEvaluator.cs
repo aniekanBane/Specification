@@ -42,16 +42,18 @@ public class InMemorySpecificationEvaluator : IInMemorySpecificationEvaluator
     }
 
     /// <inheritdoc/>
-    public virtual IEnumerable<TResult> Evaluate<T, TResult>(IEnumerable<T> source, ISpecification<T, TResult> specification)
+    public virtual IEnumerable<TResult> Evaluate<T, TResult>(IEnumerable<T> source,
+        ISpecification<T, TResult> specification)
     {
         if (specification.Selector is null && specification.SelectorMany is null) throw new SelectorNotFoundException();
-        if (specification.Selector != null && specification.SelectorMany != null) throw new ConcurrentSelectorsException();
+        if (specification is { Selector: not null, SelectorMany: not null })
+            throw new ConcurrentSelectorsException();
 
-        var baseQuery = Evaluate(source, (ISpecification<T>)specification);
+        var baseQuery = Evaluate<T>(source, specification);
 
         var resultQuery = specification.Selector != null
-          ? baseQuery.Select(specification.Selector.Compile())
-          : baseQuery.SelectMany(specification.SelectorMany!.Compile());
+            ? baseQuery.Select(specification.Selector.Compile())
+            : baseQuery.SelectMany(specification.SelectorMany!.Compile());
 
         return specification.PostProcessingAction is null
             ? resultQuery

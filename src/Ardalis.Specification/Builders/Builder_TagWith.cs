@@ -14,7 +14,7 @@ public static partial class SpecificationBuilderExtensions
         this ISpecificationBuilder<T, TResult> builder,
         string tag)
     {
-        TagWith((ISpecificationBuilder<T>)builder, tag, true);
+        TagWith<T>(builder, tag, true);
         return builder;
     }
 
@@ -32,7 +32,7 @@ public static partial class SpecificationBuilderExtensions
         string tag,
         bool condition)
     {
-        TagWith((ISpecificationBuilder<T>)builder, tag, condition);
+        TagWith<T>(builder, tag, condition);
         return builder;
     }
 
